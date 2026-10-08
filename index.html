@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kefil — Ajanın arkasındaki insanı kanıtla</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#faf8f4;--fg:#1c1b19;--mut:#6b675f;--card:#fff;--line:#e4dfd5;--ac:#b4231a;--ok:#1a7f4b;--code:#f1ede4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15130f;--fg:#f1ede4;--mut:#a39e92;--card:#1f1c17;--line:#38342c;--ac:#ef6a5e;--ok:#4cc38a;--code:#272319}}
+:root[data-theme="dark"]{--bg:#15130f;--fg:#f1ede4;--mut:#a39e92;--card:#1f1c17;--line:#38342c;--ac:#ef6a5e;--ok:#4cc38a;--code:#272319}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*:before,*:after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 Georgia,"Times New Roman",serif}
+main{max-width:860px;margin:0 auto;padding:24px 18px 60px}
+h1,h2,h3,button,.tag,label,code,.mono{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1{font-size:clamp(34px,7vw,56px);line-height:1.05;margin:.3em 0 .2em;letter-spacing:-.02em}
+h2{font-size:24px;margin:2.2em 0 .5em;letter-spacing:-.01em}
+h3{font-size:16px;margin:0 0 .3em}
+.tag{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ac);font-weight:700}
+.lead{font-size:20px;color:var(--mut);max-width:640px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.big{font:700 30px system-ui,sans-serif;color:var(--ac)}
+.small{font-size:14px;color:var(--mut)}
+button{font-size:15px;font-weight:600;padding:10px 16px;border-radius:8px;border:1px solid var(--fg);background:var(--fg);color:var(--bg);cursor:pointer}
+button.sec{background:transparent;color:var(--fg)}
+button:disabled{opacity:.4;cursor:not-allowed}
+input[type=text],select{width:100%;font:16px system-ui,sans-serif;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--fg)}
+label{font-size:13px;font-weight:600;display:block;margin:10px 0 4px}
+pre,code{background:var(--code);border-radius:6px}
+pre{padding:10px;overflow-x:auto;font-size:12px;margin:8px 0;white-space:pre-wrap;word-break:break-all}
+.step{border-left:3px solid var(--line);padding-left:14px;margin:18px 0}
+.step.on{border-color:var(--ac)}.step.done{border-color:var(--ok)}
+.msg{font:14px system-ui,sans-serif;margin-top:8px}
+.ok{color:var(--ok)}.bad{color:var(--ac)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+table{border-collapse:collapse;width:100%;font:14px system-ui,sans-serif}
+.tw{overflow-x:auto}
+td,th{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+ol.src{font-size:13px;color:var(--mut)}a{color:var(--ac)}
+</style>
+</head>
+<body>
+<main>
+<span class="tag">Ödev 3 · Yeni Deprem · Ürün sunumu</span>
+<h1>Kefil</h1>
+<p class="lead">Yapay zekâ ajanının arkasında gerçek bir insan olduğunu, kim olduğunu söylemeden kanıtlayan, Türkçe ve yerel öncelikli güven katmanı.</p>
+
+<h2>1. Deprem: web artık çoğunlukla insan değil</h2>
+<div class="grid">
+<div class="card"><div class="big">%50+</div><div class="small">İnternet trafiğinin insan olmayan payı. Cloudflare botlar raporu, 1 Temmuz 2026.</div></div>
+<div class="card"><div class="big">~18 mn</div><div class="small">World’ün kendi bildirdiği doğrulanmış insan sayısı (Nisan 2026). Bağımsız denetimli sayı değil.</div></div>
+<div class="card"><div class="big">24 Haz</div><div class="small">World, AgentKit erişimini genişletti: doğrulanmış kişi kimliğini ajanına devredip sıfır bilgi kanıtıyla “arkamda tekil bir insan var” diyebiliyor.</div></div>
+<div class="card"><div class="big">YC RFS</div><div class="small">Y Combinator Güz 2026 listesindeki 13 talepten biri: “Proving You’re Human”.</div></div>
+</div>
+<p>CAPTCHA’nın mantığı “otomasyonu engelle” idi. Meşru ajanlar (alışveriş, randevu, destek) geldiğinde bu mantık çöküyor. Yeni soru: <b>bu ajanın arkasında sorumlu bir insan var mı?</b> Bu bir kimlik değil, kıtlık sorunu: insan başına sınır koyabilmek.</p>
+<p class="small">Seçtiğim deprem: <b>ajan çağında kişilik kanıtı (proof of personhood)</b>. Klon referansı: World AgentKit. Aşağıdaki canlı demo bu akışın çalışan, sadeleştirilmiş bir klonudur.</p>
+
+<h2>2. Ürün: üç adımlı akış</h2>
+<p>Gerçek ECDSA P-256 imzaları kullanır (tarayıcının WebCrypto’su). Her şey bu sayfada, sunucusuz çalışır.</p>
+
+<div class="step on" id="s1">
+<h3>Adım 1 · İnsan sinyali (demo)</h3>
+<p class="small">Cümleyi yazın. Yapıştırma kapalı. Tuş vuruşlarınızın zamanlama dağılımına bakılır, Türkçe karakterler zorunludur.</p>
+<p class="mono"><b>Çığlık atan şahin göğe süzüldü</b></p>
+<input type="text" id="ph" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Cümleyi yazın">
+<div class="row"><button id="b1">Sinyali doğrula</button></div>
+<div class="msg" id="m1"></div>
+</div>
+
+<div class="step" id="s2">
+<h3>Adım 2 · Ajana yetki belgesi ver</h3>
+<label for="ag">Ajan adı</label><input type="text" id="ag" value="alisveris-ajanim">
+<label for="sc">Yetki kapsamı</label>
+<select id="sc"><option value="randevu">randevu</option><option value="alisveris" selected>alisveris</option><option value="destek">destek</option></select>
+<label for="lm">Dakikada en fazla istek</label>
+<select id="lm"><option>3</option><option selected>5</option><option>10</option></select>
+<div class="row"><button id="b2" disabled>Belge oluştur ve imzala</button></div>
+<pre id="tok" hidden></pre>
+<div class="msg small" id="m2"></div>
+</div>
+
+<div class="step" id="s3">
+<h3>Adım 3 · Web sitesi doğrular</h3>
+<p class="small">Site, ajanın isteğini imza, süre, kapsam ve insan başına hız sınırı açısından denetler. Siteye kim olduğunuz değil, yalnızca takma bir tanıtıcı gider.</p>
+<div class="row">
+<button id="b3" disabled>Ajan isteği gönder (alisveris)</button>
+<button id="b4" class="sec" disabled>Yanlış kapsam dene (randevu)</button>
+<button id="b5" class="sec" disabled>Belgeyi boz</button>
+<button id="b6" class="sec">Kefilsiz bot dene</button>
+</div>
+<pre id="log" style="min-height:70px">Henüz istek yok.</pre>
+</div>
+
+<h2>3. Klondan farkımız: yerelleştirme ve yenilik</h2>
+<div class="tw"><table>
+<tr><th></th><th>Klon (World AgentKit benzeri)</th><th>Kefil</th></tr>
+<tr><td>Dil ve hitap</td><td>İngilizce, global</td><td>Türkçe arayüz, Türkçe karakterli insan sinyali</td></tr>
+<tr><td>Doğrulama kaynağı</td><td>Özel biyometrik donanım</td><td>Takılabilir sağlayıcılar. Yol haritasında NFC çipli kimlik kartı ve e-Devlet tabanlı doğrulama (gerçek entegrasyon bu demoda yok)</td></tr>
+<tr><td>Gizlilik</td><td>Biyometrik veri toplar</td><td>Biyometri yok, kişisel veri yok, yalnızca takma tanıtıcı. KVKK’ya uygun tasarım hedefi</td></tr>
+<tr><td>Yetki modeli</td><td>Tek kimlik, genel devir</td><td>Kapsamlı ve süreli belge: ajan yalnızca verilen işte, verilen süre ve hız sınırıyla geçerli</td></tr>
+<tr><td>Hedef pazar</td><td>Büyük küresel platformlar</td><td>Yerel e-ticaret, randevu ve kamu hizmeti siteleri; küçük işletmeler için tek satır doğrulama</td></tr>
+</table></div>
+
+<h2>4. İş modeli ve yol haritası</h2>
+<div class="grid">
+<div class="card"><h3>Gelir</h3><p class="small">Siteler doğrulama başına ücret öder (ilk aylar ücretsiz katman). Bireyler her zaman ücretsiz.</p></div>
+<div class="card"><h3>0–3 ay</h3><p class="small">Bu demonun üretime taşınması, JS doğrulama kütüphanesi, 5 yerel pilot site.</p></div>
+<div class="card"><h3>3–9 ay</h3><p class="small">Sağlayıcı bağlayıcıları (NFC kimlik, e-Devlet), sıfır bilgi kanıtı, iptal listesi.</p></div>
+</div>
+
+<h2>5. Dürüst sınırlar</h2>
+<p class="small">Adım 1’deki zamanlama sinyali yalnızca gösterim içindir; gerçek bir insanı kanıtlamaz ve kararlı bir saldırgan taklit edebilir. Üründe bu adımın yerini güçlü bir sağlayıcı alır. Anahtarlar bu sayfada üretilir; üretimde imza anahtarını bağımsız bir yayıncı tutar. Kişilik kanıtı tek başına yeterli değil, bir güvenlik katmanı olarak düşünülmeli.</p>
+
+<h2>Kaynaklar</h2>
+<ol class="src">
+<li>Y Combinator, Requests for Startups, Güz 2026 (liste: modelence.com/yc-rfs-fall-2026; bigideasdb.com/yc-request-for-startups-2026)</li>
+<li>HackerNoon, “World Expands AgentKit…”, 24 Haz 2026 (hackernoon.com)</li>
+<li>Proof of Talk, “Proof of personhood, identity and the agentic age”: Cloudflare 1 Tem 2026 rakamı ve World’ün 17 Nis 2026 bildirimi (proofoftalk.io)</li>
+<li>Parity, “When AI Bots Look Human: Why We Need Proof of Personhood”, 3 Ağu 2026 (parity.io)</li>
+<li>Noema / Renee DiResta özeti, 30 Haz 2026 (letsdatascience.com)</li>
+</ol>
+</main>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)},enc=new TextEncoder();
+var PH="Çığlık atan şahin göğe süzüldü",times=[],pasted=false,keys,cred=null,hits={},sub=null;
+function b64(buf){var s="",a=new Uint8Array(buf);for(var i=0;i<a.length;i++)s+=String.fromCharCode(a[i]);return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+function unb64(s){s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";var r=atob(s),a=new Uint8Array(r.length);for(var i=0;i<r.length;i++)a[i]=r.charCodeAt(i);return a}
+function step(n){["s1","s2","s3"].forEach(function(id,i){var e=$(id);e.className="step"+(i+1<n?" done":i+1==n?" on":"")})}
+function log(t,c){var l=$("log");if(l.textContent==="Henüz istek yok.")l.textContent="";l.innerHTML+="<span class='"+c+"'>"+t+"</span>\n";}
+var ph=$("ph");
+ph.addEventListener("paste",function(e){e.preventDefault();pasted=true});
+ph.addEventListener("keydown",function(){times.push(performance.now())});
+$("b1").onclick=function(){
+  var m=$("m1"),v=ph.value.trim();
+  if(pasted){m.className="msg bad";m.textContent="Yapıştırma algılandı. Cümleyi elle yazın.";pasted=false;return}
+  if(v!==PH){m.className="msg bad";m.textContent="Cümle eşleşmiyor. Ç, ğ, ş, ı, ö, ü karakterlerine dikkat edin.";return}
+  var d=[];for(var i=1;i<times.length;i++)d.push(times[i]-times[i-1]);
+  if(d.length<10||(times[times.length-1]-times[0])<1500){m.className="msg bad";m.textContent="Çok hızlı ya da çok az vuruş. Normal hızda yazın.";return}
+  var mean=d.reduce(function(a,b){return a+b},0)/d.length,sd=Math.sqrt(d.reduce(function(a,b){return a+(b-mean)*(b-mean)},0)/d.length);
+  if(sd<20){m.className="msg bad";m.textContent="Vuruş aralıkları fazla düzenli ("+sd.toFixed(0)+" ms sapma). Tekrar deneyin.";times=[];ph.value="";return}
+  m.className="msg ok";m.textContent="İnsan sinyali geçti. Vuruş aralığı sapması: "+sd.toFixed(0)+" ms.";$("b1").disabled=true;$("b2").disabled=false;step(2);
+};
+$("b2").onclick=async function(){
+  try{
+    keys=await crypto.subtle.generateKey({name:"ECDSA",namedCurve:"P-256"},true,["sign","verify"]);
+    var rnd=crypto.getRandomValues(new Uint8Array(8));sub="kfl_"+Array.from(rnd).map(function(x){return x.toString(16).padStart(2,"0")}).join("");
+    var p={sub:sub,agent:$("ag").value.replace(/[^\w-]/g,"").slice(0,32)||"ajan",scope:$("sc").value,lim:+$("lm").value,exp:Math.floor(Date.now()/1000)+600};
+    var body=b64(enc.encode(JSON.stringify(p))),sig=await crypto.subtle.sign({name:"ECDSA",hash:"SHA-256"},keys.privateKey,enc.encode(body));
+    cred=body+"."+b64(sig);hits={};
+    var t=$("tok");t.hidden=false;t.textContent=cred;
+    $("m2").textContent="Belge 10 dakika geçerli. İçinde ad, soyad veya biyometri yok: yalnızca takma tanıtıcı, kapsam, süre ve hız sınırı.";
+    ["b3","b4","b5"].forEach(function(i){$(i).disabled=false});step(3);
+  }catch(e){$("m2").className="msg bad";$("m2").textContent="Bu tarayıcıda WebCrypto kullanılamadı."}
+};
+async function verify(tok,need){
+  var pr=tok.split(".");if(pr.length!==2)return{ok:0,why:"Belge biçimi geçersiz"};
+  try{
+    var okSig=await crypto.subtle.verify({name:"ECDSA",hash:"SHA-256"},keys.publicKey,unb64(pr[1]),enc.encode(pr[0]));
+    if(!okSig)return{ok:0,why:"İmza geçersiz (belge değiştirilmiş)"};
+    var p=JSON.parse(new TextDecoder().decode(unb64(pr[0])));
+    if(p.exp<Date.now()/1000)return{ok:0,why:"Belgenin süresi dolmuş"};
+    if(p.scope!==need)return{ok:0,why:"Kapsam uyumsuz: belge '"+p.scope+"', istek '"+need+"'"};
+    var now=Date.now();hits[p.sub]=(hits[p.sub]||[]).filter(function(t){return now-t<60000});
+    if(hits[p.sub].length>=p.lim)return{ok:0,why:"İnsan başına hız sınırı aşıldı ("+p.lim+"/dk)"};
+    hits[p.sub].push(now);return{ok:1,why:"Kabul: "+p.agent+" arkasında tekil bir insan var ("+p.sub+"). Kalan hak: "+(p.lim-hits[p.sub].length)}
+  }catch(e){return{ok:0,why:"Doğrulama hatası"}}
+}
+async function send(tok,need,label){var r=await verify(tok,need);log(label+" → "+(r.ok?"✓ ":"✗ ")+r.why,r.ok?"ok":"bad")}
+$("b3").onclick=function(){send(cred,"alisveris","İstek")};
+$("b4").onclick=function(){send(cred,"randevu","İstek")};
+$("b5").onclick=function(){var pr=cred.split(".");var p=JSON.parse(new TextDecoder().decode(unb64(pr[0])));p.lim=9999;send(b64(enc.encode(JSON.stringify(p)))+"."+pr[1],"alisveris","Bozulmuş belge")};
+$("b6").onclick=async function(){if(!keys){keys=await crypto.subtle.generateKey({name:"ECDSA",namedCurve:"P-256"},true,["sign","verify"])}send("belge-yok","alisveris","Kefilsiz bot")};
+})();
+</script>
+</body>
+</html>
